@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import AppHeader from './components/AppHeader';
 import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
 
 export default class App extends Component {
   state = {
@@ -28,18 +29,7 @@ export default class App extends Component {
       <View style={{ flex: 1, backgroundColor: '#ddd' }}>
         <AppHeader headerText="Simple Todo App" />
         <TodoForm onPressAdd={this.onPressAdd} />
-
-        <List containerStyle={{marginTop: 10}}>
-          {
-            this.state.todos.map((x, i) => (
-              <ListItem
-                key={i}
-                title={x.todo}
-                onPress={() => this.onPressTodo(i)}
-              />
-            ))
-          }
-        </List>
+        <TodoList todos={this.state.todos} onPressTodo={this.onPressTodo} />
       </View>
     );
   }
