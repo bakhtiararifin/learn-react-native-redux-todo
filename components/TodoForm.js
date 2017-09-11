@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 
-class SearchBar extends Component {
-  state = { term: '' };
+class TodoForm extends Component {
+  state = { todo: '' };
+
+  onPressAdd = () => {
+    let todo = this.state.todo;
+    this.state.todo = '';
+    this.props.onPressAdd(todo);
+  }
 
   render() {
     const {
@@ -16,13 +22,13 @@ class SearchBar extends Component {
       <View style={containerStyle}>
         <TextInput
           style={searchTextStyle}
-          onChangeText={term => this.setState({ term })}
-          value={this.state.term}
+          onChangeText={todo => this.setState({ todo })}
+          value={this.state.todo}
         />
         <Button
           buttonStyle={buttonStyle}
-          title="Search"
-          onPress={() => this.props.onPressSearch(this.state.term)}
+          title="Add"
+          onPress={this.onPressAdd}
         />
       </View>
     );
@@ -46,4 +52,4 @@ const styles = {
 };
 
 
-export default SearchBar;
+export default TodoForm;
