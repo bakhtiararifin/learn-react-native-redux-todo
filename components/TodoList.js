@@ -6,11 +6,11 @@ class TodoList extends Component {
     return (
       <List containerStyle={{marginTop: 10}}>
         {
-          this.props.todos.map((x, i) => (
+          this.props.todos.map((todo) => (
             <ListItem
-              key={i}
-              title={x.todo}
-              onPress={() => this.props.onPressTodo(i)}
+              key={todo.id}
+              title={todo.todo}
+              onPress={() => this.props.deleteTodo(todo.id)}
             />
           ))
         }

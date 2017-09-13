@@ -8,7 +8,9 @@ class TodoForm extends Component {
   onPressAdd = () => {
     let todo = this.state.todo;
     this.state.todo = '';
-    this.props.onPressAdd(todo);
+    console.log('todo:', todo)
+    console.log('state.todo:', this.state.todo)
+    this.props.addTodo(todo);
   }
 
   render() {
