@@ -6,11 +6,8 @@ class TodoForm extends Component {
   state = { todo: '' };
 
   onPressAdd = () => {
-    let todo = this.state.todo;
-    this.state.todo = '';
-    console.log('todo:', todo)
-    console.log('state.todo:', this.state.todo)
-    this.props.addTodo(todo);
+    this.props.addTodo(this.state.todo);
+    this.setState({ todo: '' })
   }
 
   render() {
