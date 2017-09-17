@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 
 class TodoForm extends Component {
   state = { todo: '' };
 
   onPressAdd = () => {
     this.props.addTodo(this.state.todo);
-    this.setState({ todo: '' })
+    this.setState({ todo: '' });
+    Actions.todoList();
   }
 
   render() {
@@ -18,17 +20,18 @@ class TodoForm extends Component {
     } = styles;
 
     return (
-      <View style={containerStyle}>
-        <TextInput
-          style={searchTextStyle}
-          onChangeText={todo => this.setState({ todo })}
-          value={this.state.todo}
-        />
-        <Button
-          buttonStyle={buttonStyle}
-          title="Add"
-          onPress={this.onPressAdd}
-        />
+      <View style={{ backgroundColor: '#ddd' }}>
+        <View style={containerStyle}>
+          <TextInput
+            onChangeText={todo => this.setState({ todo })}
+            value={this.state.todo}
+          />
+          <Button
+            buttonStyle={buttonStyle}
+            title="Add"
+            onPress={this.onPressAdd}
+          />
+        </View>
       </View>
     );
   }
@@ -36,16 +39,11 @@ class TodoForm extends Component {
 
 const styles = {
   containerStyle: {
-    marginTop: 75,
-    marginLeft: 10,
-    marginRight: 10,
-    flexDirection: 'row'
-  },
-  searchTextStyle: {
-    flex: 1
+    marginTop: 10,
+    marginLeft: 15,
+    marginRight: 15,
   },
   buttonStyle: {
-    height: 30,
     marginBottom: 8
   }
 };
