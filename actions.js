@@ -11,3 +11,10 @@ export const deleteTodo = id => {
     id
   }
 }
+
+export const setTodos = todos => {
+  return {
+    type: 'SET_TODOS',
+    todos
+  }
+}

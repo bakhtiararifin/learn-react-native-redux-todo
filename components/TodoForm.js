@@ -7,9 +7,18 @@ class TodoForm extends Component {
   state = { todo: '' };
 
   onPressAdd = () => {
-    this.props.addTodo(this.state.todo);
-    this.setState({ todo: '' });
-    Actions.todoList();
+    fetch('https://lumen-todo-api.herokuapp.com/todos/add', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({todo: this.state.todo})
+    })
+    .then(response => response.json())
+    .then(response => {
+      Actions.todoList();
+    })
   }
 
   render() {

@@ -16,6 +16,10 @@ const reducer = (state = {todos: []}, action) => {
         return {
           todos: state.todos.filter(todo => todo.id !== action.id)
         }
+      case 'SET_TODOS':
+        return {
+          todos: action.todos
+        }
       default:
         return state
     }
