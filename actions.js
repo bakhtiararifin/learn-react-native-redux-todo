@@ -1,6 +1,7 @@
 const API_URL = 'https://lumen-todo-api.herokuapp.com';
 
 export const addTodo = todo => dispatch => {
+  dispatch(startLoading())
   return fetch(API_URL + '/todos/add', {
     method: 'post',
     headers: {
@@ -9,19 +10,19 @@ export const addTodo = todo => dispatch => {
     },
     body: JSON.stringify({ todo })
   })
-    .then(response => response.json())
-    .then(
-      json => {
-        dispatch({
-          type: 'ADD_TODO',
-          todo : json
-        })
-      },
-      error => console.log(error)
-    )
+  .then(response => {
+    if (response.ok) {
+      dispatch(loadTodos())
+    } else {
+      dispatch(endLoading())
+    }
+
+    return response
+  })
 }
 
 export const deleteTodo = id => dispatch => {
+  dispatch(startLoading())
   return fetch(API_URL + '/todos/delete', {
     method: 'post',
     headers: {
@@ -32,14 +33,12 @@ export const deleteTodo = id => dispatch => {
   })
     .then(response => response.json())
     .then(json => {
-      dispatch({
-        type: 'DELETE_TODO',
-        id
-      })
+      dispatch(loadTodos())
     }, error => console.log(error))
 }
 
 export const loadTodos = () => dispatch => {
+  dispatch(startLoading())
   return fetch(API_URL + '/todos', {
     method: 'post'
   })
@@ -49,10 +48,16 @@ export const loadTodos = () => dispatch => {
         type: 'SET_TODOS',
         todos: json
       })
-      return json
+      dispatch(endLoading())
     }, error => console.log(error))
 }
 
-export const fetchLoadTodos = () => dispatch => {
-  return dispatch(loadTodos());
-}
+export const startLoading = () => ({
+  type: 'SET_LOADING',
+  loading: true
+})
+
+export const endLoading = () => ({
+  type: 'SET_LOADING',
+  loading: false
+})

@@ -4,19 +4,12 @@ import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 class TodoList extends Component {
-  state = {
-    loading: false
-  }
 
   onPressItem = id => {
-    this.setState({ loading: true })
-    this.props.deleteTodo(id).then(() => {
-      this.setState({ loading: false })
-    });
+    this.props.deleteTodo(id);
   }
 
   render() {
-    let loading = this.state.loading;
     return (
       <View style={{ flex: 1, backgroundColor: '#ddd' }}>
         <View style={{ marginTop: 10 }}>
@@ -25,7 +18,7 @@ class TodoList extends Component {
             onPress={() => Actions.todoForm()}
           />
         </View>
-        {loading ? (
+        {this.props.loading ? (
           <Text style={{ color: 'red', textAlign: 'center' }}>
             Loading...
           </Text>

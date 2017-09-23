@@ -4,10 +4,11 @@ import { loadTodos, deleteTodo } from '../actions'
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    todos: state.todos,
+    loading: state.loading
   }
 }
-  
+
 const mapDispatchToProps = dispatch => {
   return {
     deleteTodo: (id) => {

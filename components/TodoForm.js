@@ -6,21 +6,18 @@ import { Actions } from 'react-native-router-flux';
 class TodoForm extends Component {
   state = {
     todo: '',
-    error: null,
-    loading: false
+    error: null
   };
 
   onPressAdd = () => {
-    if (this.state.todo === '') {
-      this.setState({error: 'todo is required'});
-      return;
-    }
-
-    this.setState({loading: true})
     this.props.addTodo(this.state.todo)
-      .then(() => {
-        this.setState({loading: false})
-        Actions.todoList()
+      .then(response => {
+        if (response.ok) {
+          Actions.todoList();
+        } else {
+          response.json()
+            .then(json => this.setState({error: json.todo[0]}))
+        }
       })
   }
 
@@ -31,8 +28,8 @@ class TodoForm extends Component {
       buttonStyle
     } = styles;
 
-    let text = this.state.loading ? 'Loading...' :
-                this.state.error ? this.state.error : null;
+    let text = this.props.loading ? 'Loading...' :
+      this.state.error ? this.state.error : null;
 
     return (
       <View style={{ flex: 1, backgroundColor: '#ddd' }}>
@@ -67,6 +64,5 @@ const styles = {
     marginBottom: 8
   }
 };
-
 
 export default TodoForm;
