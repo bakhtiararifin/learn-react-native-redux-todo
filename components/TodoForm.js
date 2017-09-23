@@ -3,8 +3,6 @@ import { View, TextInput, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
-import { addTodo } from '../services/todoService';
-
 class TodoForm extends Component {
   state = {
     todo: '',
@@ -13,17 +11,16 @@ class TodoForm extends Component {
   };
 
   onPressAdd = () => {
-    this.setState({ ...this.state, loading: true });
+    if (this.state.todo === '') {
+      this.setState({error: 'todo is required'});
+      return;
+    }
 
-    addTodo(this.state.todo)
-      .then(response => {
-        if (response.ok) {
-          Actions.todoList();
-        } else {
-          response.json().then(json => {
-            this.setState({ ...this.state, error: json.todo[0], loading: false })
-          })
-        }
+    this.setState({loading: true})
+    this.props.addTodo(this.state.todo)
+      .then(() => {
+        this.setState({loading: false})
+        Actions.todoList()
       })
   }
 
