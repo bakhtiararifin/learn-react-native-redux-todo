@@ -11,12 +11,11 @@ class TodoForm extends Component {
 
   onPressAdd = () => {
     this.props.addTodo(this.state.todo)
-      .then(response => {
-        if (response.ok) {
+      .then(({success, json}) => {
+        if (success) {
           Actions.todoList();
         } else {
-          response.json()
-            .then(json => this.setState({error: json.todo[0]}))
+         this.setState({error: json.todo[0]})
         }
       })
   }

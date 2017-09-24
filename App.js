@@ -16,7 +16,7 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-store.dispatch(loadTodos());
+store.dispatch(loadTodos())
 
 export default class App extends Component {
   render() {
